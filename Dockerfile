@@ -10,8 +10,10 @@ COPY requirements.txt /app/
 # Install any dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install gunicorn
+
 # Copy the current directory contents into the container at /app
 COPY . /app/
 
 # Run your Python script
-CMD ["sh", "-c", "python initialize.py && python runserver.py"]
+CMD ["sh", "-c", "python initialize.py && gunicorn -b :1234 -w 4 gavel:app"]
