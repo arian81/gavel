@@ -16,4 +16,4 @@ RUN pip install gunicorn
 COPY . /app/
 
 # Run your Python script
-CMD ["sh", "-c", "celery -A gavel:celery worker & python initialize.py && python runserver.py"]
+CMD ["sh", "-c", "celery -A gavel:celery worker & python initialize.py && gunicorn -b :1234 -w 4 gavel:app"]
